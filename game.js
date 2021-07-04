@@ -8,11 +8,11 @@ const colorToMonster = {
 };
 
 const sounds = {
-  red: new Audio("/assets/sounds/red.mp3"),
-  green: new Audio("/assets/sounds/green.mp3"),
-  blue: new Audio("/assets/sounds/blue.mp3"),
-  yellow: new Audio("/assets/sounds/yellow.mp3"),
-  wrong: new Audio("/assets/sounds/wrong.mp3"),
+  red: new Audio("./assets/sounds/red.mp3"),
+  green: new Audio("./assets/sounds/green.mp3"),
+  blue: new Audio("./assets/sounds/blue.mp3"),
+  yellow: new Audio("./assets/sounds/yellow.mp3"),
+  wrong: new Audio("./assets/sounds/wrong.mp3"),
 };
 
 const keyToColor = {
