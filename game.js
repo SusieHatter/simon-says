@@ -25,6 +25,7 @@ const keyToColor = {
 // State
 var gamePattern = [];
 var userClickedPattern = [];
+var playing = false;
 var level = 0;
 
 function correctColor(level) {
@@ -62,6 +63,22 @@ function animateGameOver() {
   }, 200);
 }
 
+function animateSimonText(text, fadeTime = 800) {
+  $("#simon > p").html(text).fadeIn(0).fadeOut(fadeTime);
+}
+
+function animateAngrySimon() {
+  const simonImg = $("#simon > img");
+  simonImg.attr("src", `./assets/simon-angry.png`);
+  setTimeout(function () {
+    simonImg.attr("src", `./assets/simon-happy.png`);
+  }, 1000);
+  simonImg.addClass("simon-angry");
+  setTimeout(function () {
+    simonImg.removeClass("simon-angry");
+  }, 1000);
+}
+
 function animateNextColor(color) {
   playSound(color);
   $("#" + color)
@@ -82,10 +99,14 @@ function start() {
   level = 0;
   gamePattern = [];
   userClickedPattern = [];
+  playing = true;
   nextSequence();
 }
 
 function userSelectColour(color) {
+  if (!playing) {
+    return;
+  }
   userClickedPattern.push(color);
   playSound(color);
   animateUserSelect(color);
@@ -94,8 +115,11 @@ function userSelectColour(color) {
 
 function checkAnswer(color, level) {
   if (!correctColor(level)) {
+    playing = false;
     animateGameOver();
-    setTimeout(start, 1000);
+    animateSimonText("GAME OVER!", 1000);
+    animateAngrySimon();
+    setTimeout(start, 1500);
     return;
   }
   animateHappyMonster(color);
@@ -110,6 +134,7 @@ function nextSequence() {
   level++;
   $("#level-title").text("Level " + level);
   const randomColor = getRandomColor();
+  animateSimonText(randomColor);
   gamePattern.push(randomColor);
   animateNextColor(randomColor);
 }
